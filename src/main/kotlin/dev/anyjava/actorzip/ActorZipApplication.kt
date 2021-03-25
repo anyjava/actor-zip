@@ -1,4 +1,4 @@
-package dev.anyjava.actorzip.api
+package dev.anyjava.actorzip
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

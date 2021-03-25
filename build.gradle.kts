@@ -32,7 +32,12 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "junit")
+        exclude(module = "hamcrest-core")
+        exclude(module = "hamcrest-library")
+    }
+
 
     runtimeOnly("com.h2database:h2")
 }
