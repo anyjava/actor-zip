@@ -1,14 +1,21 @@
 package dev.anyjava.actorzip.adapter.presentation.controller
 
 import dev.anyjava.actorzip.feed.application.FeedApplicationService
+import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
+private val log = KLogging()
+
 @RestController
 class FeedController {
+
+    companion object : KLogging()
 
     private val feedApplicationService: FeedApplicationService
 
@@ -18,8 +25,9 @@ class FeedController {
     }
 
     @GetMapping("/feeds")
-    fun getFeeds() : Slice<FeedsResponse> {
-        return feedApplicationService.getFeeds()
+    fun getFeeds(pageRequest: Pageable) : Slice<FeedsResponse> {
+        print("pageable = $pageRequest")
+        return feedApplicationService.getFeeds(pageRequest)
     }
 
 }

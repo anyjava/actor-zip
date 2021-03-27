@@ -29,6 +29,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+    // Swagger UI Standalone webjar 를 위함. springfoxVersion 과는 별도임.
+    implementation("org.webjars:swagger-ui:3.37.0")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -37,6 +42,7 @@ dependencies {
         exclude(module = "hamcrest-core")
         exclude(module = "hamcrest-library")
     }
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
 
 
     runtimeOnly("com.h2database:h2")
