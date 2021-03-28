@@ -4,34 +4,31 @@ import dev.anyjava.actorzip.common.utils.convertDateTime
 import dev.anyjava.actorzip.feed.domain.Feed
 import dev.anyjava.actorzip.feed.domain.SiteType
 import dev.anyjava.actorzip.feed.service.FeedScraper
-import mu.KotlinLogging
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
-private val logger = KotlinLogging.logger {}
-
 @Component
-class ClienScrapper : FeedScraper {
+class DcScrapper : FeedScraper {
 
-    val SITE_TYPE = SiteType.CLIEN
+    val SITE_TYPE = SiteType.DC
 
     override fun accept(siteType: SiteType): Boolean {
         return siteType == SITE_TYPE
     }
 
     override fun scrap(lastDateTime: LocalDateTime): List<Feed> {
-        val document = Jsoup.connect("https://www.clien.net/service/search?q=%ED%95%9C%EC%98%88%EB%A6%AC").get()
-        return document.select(".list_item").asSequence()
-            .map {
-                Feed(
-                    it.select(".subject_fixed").attr("title"),
-                    it.select(".subject_fixed").attr("href"),
-                    convertDateTime(it.select(".timestamp").text())
-                )
+        val document = Jsoup.connect("https://gall.dcinside.com/mgallery/board/lists/?id=hanyeri&page=1").get()
+
+        return document.select(".ub-content").asSequence()
+            .filter { it.attr("data-type") != "icon_notice" }
+            .map { Feed(
+                it.select(".gall_tit").select("a").text(),
+                it.select(".gall_tit").select("a").attr("href"),
+                convertDateTime(it.select(".gall_date").attr("title")),
+                SiteType.DC)
             }
             .filter { it.registrationDateTime > lastDateTime }
-            .onEach { logger.debug("clien = $it") }
             .toList()
     }
 }
