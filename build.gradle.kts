@@ -36,6 +36,7 @@ dependencies {
 
     implementation("io.github.microutils:kotlin-logging:2.0.6")
 
+    implementation("org.jsoup:jsoup:1.13.1")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

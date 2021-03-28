@@ -36,6 +36,6 @@ class FeedInMemoryRepository : FeedRepository {
     }
 
     private fun getOne(idx: Int) : Feed {
-        return Feed("테스트 게시글 $idx", "http://www.client.net/", LocalDateTime.now())
+        return Feed("테스트 게시글 $idx", "http://www.clien.net/", LocalDateTime.now())
     }
 }
