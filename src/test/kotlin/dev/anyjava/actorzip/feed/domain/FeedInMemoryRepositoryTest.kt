@@ -13,7 +13,7 @@ class FeedInMemoryRepositoryTest(var feedInMemoryRepository: FeedInMemoryReposit
         val pageSize = 10
         val list = feedInMemoryRepository.findAll(PageRequest.of(1, pageSize))
         list.size shouldBe pageSize
-        list.get(list.size-1).title should contain("19")
+        list.content.get(list.size-1).title should contain("19")
     }
 
 }) {

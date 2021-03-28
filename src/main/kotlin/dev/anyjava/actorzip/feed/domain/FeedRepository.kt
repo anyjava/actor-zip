@@ -1,12 +1,14 @@
 package dev.anyjava.actorzip.feed.domain
 
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Slice
+import org.springframework.data.domain.SliceImpl
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 import javax.annotation.PostConstruct
 
 interface FeedRepository {
-    fun findAll(pageable: Pageable): List<Feed>
+    fun findAll(pageable: Pageable): Slice<Feed>
 }
 
 @Repository
@@ -14,11 +16,13 @@ class FeedInMemoryRepository : FeedRepository {
 
     lateinit var allFeeds: List<Feed>
 
-    override fun findAll(pageable: Pageable): List<Feed> {
-        return this.allFeeds
+    override fun findAll(pageable: Pageable): Slice<Feed> {
+        val list = this.allFeeds
             .drop(pageable.pageNumber * pageable.pageSize)
             .take(pageable.pageSize)
             .toList()
+
+        return SliceImpl(list, pageable, true)
     }
 
     @PostConstruct

@@ -34,6 +34,8 @@ dependencies {
     // Swagger UI Standalone webjar 를 위함. springfoxVersion 과는 별도임.
     implementation("org.webjars:swagger-ui:3.37.0")
 
+    implementation("io.github.microutils:kotlin-logging:2.0.6")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

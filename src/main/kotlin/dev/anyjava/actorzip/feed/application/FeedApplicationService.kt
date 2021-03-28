@@ -15,21 +15,15 @@ import java.time.LocalDateTime
 class FeedApplicationService {
 
     var feedRepository: FeedRepository
-    var p: PageableHandlerMethodArgumentResolverCustomizer
 
-    constructor(feedRepository: FeedRepository, p: PageableHandlerMethodArgumentResolverCustomizer) {
+    constructor(feedRepository: FeedRepository) {
         this.feedRepository = feedRepository
-        this.p = p
     }
 
 
     fun getFeeds(pageable: Pageable): Slice<FeedsResponse> {
-        print("=========== $p")
-        val content = feedRepository.findAll(pageable).asSequence()
+        return feedRepository.findAll(pageable)
             .map { convert(it) }
-            .toList()
-
-        return SliceImpl(content)
     }
 
     private fun convert(it: Feed): FeedsResponse {
