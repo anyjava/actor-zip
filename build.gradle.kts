@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.4.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("io.kotlintest") version "1.1.1"
+
     kotlin("jvm") version "1.4.31"
     kotlin("plugin.spring") version "1.4.31"
     kotlin("plugin.jpa") version "1.4.31"
@@ -45,7 +47,9 @@ dependencies {
         exclude(module = "hamcrest-core")
         exclude(module = "hamcrest-library")
     }
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    testImplementation("io.kotest:kotest-runner-junit5:4.4.3")
+    testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
+    testImplementation("io.kotest:kotest-assertions-core:4.4.3")
 
 
     runtimeOnly("com.h2database:h2")

@@ -7,4 +7,8 @@ class Feed(
     var url: String,
     var registrationDateTime: LocalDateTime
 ) {
+
+    override fun toString(): String {
+        return "Feed(title='$title', url='$url', registrationDateTime=$registrationDateTime)"
+    }
 }
