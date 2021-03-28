@@ -11,7 +11,6 @@ class DcScrapperTest(val dcScrapper: DcScrapper) : FunSpec({
         val list = dcScrapper.scrap(LocalDateTime.MIN)
 
         list.size shouldBeGreaterThan 1
-        list.get(0).title shouldBe "1"
     }
 
     test("now 던지면 조회되는 feed 가 없음") {
