@@ -27,6 +27,6 @@ class FeedApplicationService {
     }
 
     private fun convert(it: Feed): FeedsResponse {
-        return FeedsResponse(it.title, it.url, it.registrationDateTime)
+        return FeedsResponse(it.title, it.siteType, it.getContentUrl(), it.registrationDateTime)
     }
 }

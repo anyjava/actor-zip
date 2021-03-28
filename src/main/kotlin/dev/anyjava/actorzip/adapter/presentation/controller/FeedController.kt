@@ -1,6 +1,7 @@
 package dev.anyjava.actorzip.adapter.presentation.controller
 
 import dev.anyjava.actorzip.feed.application.FeedApplicationService
+import dev.anyjava.actorzip.feed.domain.SiteType
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -29,4 +30,4 @@ class FeedController {
 
 }
 
-data class FeedsResponse(val title: String, val url: String, val registrationDateTime: LocalDateTime)
+data class FeedsResponse(val title: String, val siteType: SiteType, val url: String, val registrationDateTime: LocalDateTime)
