@@ -28,6 +28,7 @@ class SwaggerConfig(private val typeResolver: TypeResolver) {
         return Docket(DocumentationType.SWAGGER_2)
             .alternateTypeRules(alternateTypeRules)
             .groupName("actor-zip API")
+            .host("83a1zafg25.execute-api.ap-northeast-2.amazonaws.com/dev")
             .select()
             .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
             .paths(PathSelectors.any())
