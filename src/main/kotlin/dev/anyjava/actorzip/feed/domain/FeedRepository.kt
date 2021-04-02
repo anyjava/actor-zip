@@ -26,7 +26,7 @@ class FeedClienRepository : FeedRepository {
             .take(pageable.pageSize)
             .toList()
 
-        return SliceImpl(list, pageable, true)
+        return SliceImpl(list, pageable, list.size < 20)
     }
 
     override fun findTop1BySiteTypeOrderByRegistrationDateTimeDesc(siteType: SiteType): Feed? {
