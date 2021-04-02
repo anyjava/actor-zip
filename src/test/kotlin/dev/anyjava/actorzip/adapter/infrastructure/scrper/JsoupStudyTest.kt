@@ -1,4 +1,4 @@
-package dev.anyjava.actorzip.infrastructure.scrper
+package dev.anyjava.actorzip.adapter.infrastructure.scrper
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.comparables.beGreaterThan

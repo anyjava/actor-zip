@@ -1,4 +1,4 @@
-package dev.anyjava.actorzip.infrastructure.scrper
+package dev.anyjava.actorzip.adapter.infrastructure.scrper
 
 import dev.anyjava.actorzip.common.utils.convertDateTime
 import dev.anyjava.actorzip.feed.domain.Feed
