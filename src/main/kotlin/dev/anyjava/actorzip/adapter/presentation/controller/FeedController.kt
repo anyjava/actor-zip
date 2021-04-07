@@ -24,11 +24,11 @@ class FeedController(private val feedApplicationService: FeedApplicationService)
             value = "제외대상 site",
             defaultValue = "",
             example = "CLIEN,DC"
-        ) @RequestParam excludeSiteTypes: Set<SiteType>,
+        ) @RequestParam(required = false) excludeSiteTypes: Set<SiteType>?,
         pageRequest: Pageable
     ): Slice<FeedsResponse> {
         logger.info("siteTypes = $excludeSiteTypes, pageable = $pageRequest")
-        return feedApplicationService.getFeeds(excludeSiteTypes, pageRequest)
+        return feedApplicationService.getFeeds(excludeSiteTypes?: setOf(), pageRequest)
     }
 
     @GetMapping("/mediaFeeds")
