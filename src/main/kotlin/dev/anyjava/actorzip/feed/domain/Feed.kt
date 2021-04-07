@@ -18,7 +18,7 @@ class Feed(
     }
 }
 
-enum class SiteType(val host: String) {
-    CLIEN("https://clien.net"),
-    DC("https://gall.dcinside.com")
+enum class SiteType(val siteName: String, val host: String) {
+    CLIEN("클리앙", "https://clien.net"),
+    DC("디씨인사이드", "https://gall.dcinside.com")
 }

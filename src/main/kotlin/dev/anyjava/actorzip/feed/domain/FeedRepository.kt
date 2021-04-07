@@ -6,7 +6,7 @@ import org.springframework.data.domain.SliceImpl
 import org.springframework.stereotype.Repository
 
 interface FeedRepository {
-    fun findAll(pageable: Pageable): Slice<Feed>
+    fun findAll(siteTypes: Set<SiteType>, pageable: Pageable): Slice<Feed>
     fun findTop1BySiteTypeOrderByRegistrationDateTimeDesc(siteType: SiteType): Feed?
     fun saveAll(feeds: List<Feed>)
 }
@@ -19,8 +19,9 @@ class FeedClienRepository : FeedRepository {
 
     private val memory: MutableList<Feed> = mutableListOf()
 
-    override fun findAll(pageable: Pageable): Slice<Feed> {
+    override fun findAll(excludeSiteTypes: Set<SiteType>, pageable: Pageable): Slice<Feed> {
         val list = memory
+            .filter { !excludeSiteTypes.contains(it.siteType) }
             .sortedByDescending { it.registrationDateTime }
             .drop(pageable.pageNumber * pageable.pageSize)
             .take(pageable.pageSize)
