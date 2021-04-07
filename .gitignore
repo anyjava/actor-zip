@@ -38,3 +38,6 @@ out/
 
 ### jenv ###
 .java-version
+
+### credential ###
+/src/main/resources/secret/
