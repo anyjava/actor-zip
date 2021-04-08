@@ -9,6 +9,8 @@ class Feed(
     var siteType: SiteType = SiteType.CLIEN,
 ) {
 
+    companion object {}
+
     override fun toString(): String {
         return "Feed(title='$title', url='$url', siteType=$siteType, registrationDateTime=$registrationDateTime)"
     }
