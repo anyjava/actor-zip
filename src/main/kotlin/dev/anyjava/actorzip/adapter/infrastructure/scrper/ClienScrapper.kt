@@ -2,6 +2,7 @@ package dev.anyjava.actorzip.adapter.infrastructure.scrper
 
 import dev.anyjava.actorzip.common.utils.convertDateTime
 import dev.anyjava.actorzip.feed.domain.Feed
+import dev.anyjava.actorzip.feed.domain.MediaFeed
 import dev.anyjava.actorzip.feed.domain.SiteType
 import dev.anyjava.actorzip.feed.service.FeedScraper
 import mu.KotlinLogging
@@ -32,6 +33,28 @@ class ClienScrapper : FeedScraper {
             }
             .filter { it.registrationDateTime > lastDateTime }
             .onEach { logger.debug("clien = $it") }
+            .toList()
+    }
+}
+
+@Component
+class ClienMediaImageScrapper {
+
+    fun accept(feed: Feed): Boolean {
+        logger.info(">> ${feed.getContentUrl()}")
+        val document = Jsoup.connect(feed.getContentUrl()).get()
+        return document.select(".post_article").asSequence()
+            .map { it.select("img") }
+            .flatMap { it }
+            .any()
+    }
+
+    fun scrap(feed: Feed): List<MediaFeed> {
+        val document = Jsoup.connect(feed.getContentUrl()).get()
+        return document.select(".post_article").asSequence()
+            .map { it.select("img") }
+            .flatMap { it }
+            .map { MediaFeed(it.attr("src")) }
             .toList()
     }
 }
