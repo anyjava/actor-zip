@@ -5,9 +5,9 @@ import io.kotest.matchers.shouldBe
 
 class SpreadSheetRepositoryTest(val spreadSheetRepository: SpreadSheetRepository) : FunSpec({
 
-    test("get google sh") {
-        spreadSheetRepository.run()
-    }
+//    test("get google sh") {
+//        spreadSheetRepository.run()
+//    }
 
 }) {
     constructor() : this(SpreadSheetRepository())

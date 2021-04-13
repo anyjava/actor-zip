@@ -5,6 +5,7 @@ import dev.anyjava.actorzip.feed.domain.Feed
 import dev.anyjava.actorzip.feed.domain.MediaFeed
 import dev.anyjava.actorzip.feed.domain.SiteType
 import dev.anyjava.actorzip.feed.service.FeedScraper
+import dev.anyjava.actorzip.feed.service.MediaFeedFinder
 import mu.KotlinLogging
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
@@ -38,9 +39,13 @@ class ClienScrapper : FeedScraper {
 }
 
 @Component
-class ClienMediaImageScrapper {
+class ClienMediaImageScrapper : MediaFeedFinder {
 
-    fun accept(feed: Feed): Boolean {
+    override fun acceptSite(feed: Feed): Boolean {
+        return feed.siteType == SiteType.CLIEN
+    }
+
+    override fun accept(feed: Feed): Boolean {
         logger.info(">> ${feed.getContentUrl()}")
         val document = Jsoup.connect(feed.getContentUrl()).get()
         return document.select(".post_article").asSequence()
@@ -49,7 +54,7 @@ class ClienMediaImageScrapper {
             .any()
     }
 
-    fun scrap(feed: Feed): List<MediaFeed> {
+    override fun scrap(feed: Feed): List<MediaFeed> {
         val document = Jsoup.connect(feed.getContentUrl()).get()
         return document.select(".post_article").asSequence()
             .map { it.select("img") }
@@ -60,9 +65,13 @@ class ClienMediaImageScrapper {
 }
 
 @Component
-class ClienMediaYoutubeScrapper {
+class ClienMediaYoutubeScrapper : MediaFeedFinder {
 
-    fun accept(feed: Feed): Boolean {
+    override fun acceptSite(feed: Feed): Boolean {
+        return feed.siteType == SiteType.CLIEN
+    }
+
+    override fun accept(feed: Feed): Boolean {
         logger.info(">> ${feed.getContentUrl()}")
         val document = Jsoup.connect(feed.getContentUrl()).get()
         return document.select(".post_article").asSequence()
@@ -72,7 +81,7 @@ class ClienMediaYoutubeScrapper {
             .any()
     }
 
-    fun scrap(feed: Feed): List<MediaFeed> {
+    override fun scrap(feed: Feed): List<MediaFeed> {
         val document = Jsoup.connect(feed.getContentUrl()).get()
         return document.select(".post_article").asSequence()
             .map { it.select(".video") }
@@ -84,9 +93,13 @@ class ClienMediaYoutubeScrapper {
 }
 
 @Component
-class ClienMediaAviScrapper {
+class ClienMediaAviScrapper : MediaFeedFinder {
 
-    fun accept(feed: Feed): Boolean {
+    override fun acceptSite(feed: Feed): Boolean {
+        return feed.siteType == SiteType.CLIEN
+    }
+
+    override fun accept(feed: Feed): Boolean {
         logger.info(">> ${feed.getContentUrl()}")
         val document = Jsoup.connect(feed.getContentUrl()).get()
         return document.select(".post_article").asSequence()
@@ -95,7 +108,7 @@ class ClienMediaAviScrapper {
             .any()
     }
 
-    fun scrap(feed: Feed): List<MediaFeed> {
+    override fun scrap(feed: Feed): List<MediaFeed> {
         val document = Jsoup.connect(feed.getContentUrl()).get()
         return document.select(".post_article").asSequence()
             .map { it.select("video") }
