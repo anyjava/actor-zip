@@ -58,3 +58,49 @@ class ClienMediaImageScrapper {
             .toList()
     }
 }
+
+@Component
+class ClienMediaYoutubeScrapper {
+
+    fun accept(feed: Feed): Boolean {
+        logger.info(">> ${feed.getContentUrl()}")
+        val document = Jsoup.connect(feed.getContentUrl()).get()
+        return document.select(".post_article").asSequence()
+            .map { it.select(".video") }
+            .flatMap { it }
+            .filter { it.select("iframe").attr("src").contains("youtube.com") }
+            .any()
+    }
+
+    fun scrap(feed: Feed): List<MediaFeed> {
+        val document = Jsoup.connect(feed.getContentUrl()).get()
+        return document.select(".post_article").asSequence()
+            .map { it.select(".video") }
+            .flatMap { it }
+            .filter { it.select("iframe").attr("src").contains("youtube.com") }
+            .map { MediaFeed(it.select("iframe").attr("src")) }
+            .toList()
+    }
+}
+
+@Component
+class ClienMediaAviScrapper {
+
+    fun accept(feed: Feed): Boolean {
+        logger.info(">> ${feed.getContentUrl()}")
+        val document = Jsoup.connect(feed.getContentUrl()).get()
+        return document.select(".post_article").asSequence()
+            .map { it.select("video") }
+            .flatMap { it }
+            .any()
+    }
+
+    fun scrap(feed: Feed): List<MediaFeed> {
+        val document = Jsoup.connect(feed.getContentUrl()).get()
+        return document.select(".post_article").asSequence()
+            .map { it.select("video") }
+            .flatMap { it }
+            .map { MediaFeed(it.select("source").attr("src"), it.attr("poster")) }
+            .toList()
+    }
+}
