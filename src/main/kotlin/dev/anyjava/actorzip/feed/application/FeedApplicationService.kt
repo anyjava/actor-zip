@@ -9,14 +9,7 @@ import org.springframework.data.domain.Slice
 import org.springframework.stereotype.Service
 
 @Service
-class FeedApplicationService {
-
-    var feedRepository: FeedRepository
-
-    constructor(feedRepository: FeedRepository) {
-        this.feedRepository = feedRepository
-    }
-
+class FeedApplicationService(val feedRepository: FeedRepository) {
 
     fun getFeeds(excludeSiteTypes: Set<SiteType>, pageable: Pageable): Slice<FeedsResponse> {
         return feedRepository.findAll(excludeSiteTypes, pageable)

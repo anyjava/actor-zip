@@ -59,7 +59,7 @@ class ClienMediaImageScrapper : MediaFeedFinder {
         return document.select(".post_article").asSequence()
             .map { it.select("img") }
             .flatMap { it }
-            .map { MediaFeed(it.attr("src")) }
+            .map { MediaFeed(it.attr("src"), feed) }
             .toList()
     }
 }
@@ -87,7 +87,7 @@ class ClienMediaYoutubeScrapper : MediaFeedFinder {
             .map { it.select(".video") }
             .flatMap { it }
             .filter { it.select("iframe").attr("src").contains("youtube.com") }
-            .map { MediaFeed(it.select("iframe").attr("src")) }
+            .map { MediaFeed(it.select("iframe").attr("src"), feed) }
             .toList()
     }
 }
@@ -113,7 +113,7 @@ class ClienMediaAviScrapper : MediaFeedFinder {
         return document.select(".post_article").asSequence()
             .map { it.select("video") }
             .flatMap { it }
-            .map { MediaFeed(it.select("source").attr("src"), it.attr("poster")) }
+            .map { MediaFeed(it.select("source").attr("src"), feed, it.attr("poster")) }
             .toList()
     }
 }

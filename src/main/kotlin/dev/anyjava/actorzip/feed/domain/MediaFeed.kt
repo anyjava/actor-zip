@@ -1,6 +1,7 @@
 package dev.anyjava.actorzip.feed.domain
 
-class MediaFeed(val url: String, val thumbnail: String = "") {
+class MediaFeed(val url: String, val feed: Feed, val thumbnail: String = "") {
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

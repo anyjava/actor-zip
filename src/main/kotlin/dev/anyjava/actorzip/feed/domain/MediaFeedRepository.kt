@@ -7,8 +7,8 @@ interface MediaFeedRepository {
 }
 
 @Component
-class MediaFeedRepositoryImpl : MediaFeedRepository {
+class MediaFeedInMemoryRepository(val mem: MutableList<MediaFeed> = mutableListOf()) : MediaFeedRepository {
     override fun saveAll(mediaFeeds: List<MediaFeed>) {
-        TODO("Not yet implemented")
+        mem.addAll(mediaFeeds)
     }
 }

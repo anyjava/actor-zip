@@ -20,7 +20,7 @@ class FeedClienRepository : FeedRepository {
     private val memory: MutableList<Feed> = mutableListOf()
 
     override fun findAll(excludeSiteTypes: Set<SiteType>, pageable: Pageable): Slice<Feed> {
-        val list = memory
+        val list = memory.asSequence()
             .filter { !excludeSiteTypes.contains(it.siteType) }
             .sortedByDescending { it.registrationDateTime }
             .drop(pageable.pageNumber * pageable.pageSize)

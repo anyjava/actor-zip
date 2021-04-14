@@ -13,6 +13,8 @@ import java.time.LocalDateTime
 
 class MediaFeedApplicationServiceTest : AnnotationSpec() {
 
+    val anyFeed: Feed = Feed("", "", LocalDateTime.now())
+
     val mediaFeedFinder: MediaFeedFinder = object:MediaFeedFinder {
         override fun acceptSite(feed: Feed): Boolean {
             return true
@@ -23,7 +25,7 @@ class MediaFeedApplicationServiceTest : AnnotationSpec() {
         }
 
         override fun scrap(feed: Feed): List<MediaFeed> {
-            return listOf(MediaFeed(""))
+            return listOf(MediaFeed("", anyFeed))
         }
     }
 
@@ -41,6 +43,6 @@ class MediaFeedApplicationServiceTest : AnnotationSpec() {
         mediaFeedApplicationService.run(feed)
 
         // then
-        verify(mediaFeedRepository, times(1)).saveAll(listOf(MediaFeed("")))
+        verify(mediaFeedRepository, times(1)).saveAll(listOf(MediaFeed("", anyFeed)))
     }
 }
