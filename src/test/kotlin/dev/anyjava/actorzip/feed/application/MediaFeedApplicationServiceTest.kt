@@ -1,14 +1,10 @@
 package dev.anyjava.actorzip.feed.application
 
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.refEq
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
-import dev.anyjava.actorzip.feed.domain.Feed
-import dev.anyjava.actorzip.feed.domain.MediaFeed
-import dev.anyjava.actorzip.feed.domain.MediaFeedRepository
+import dev.anyjava.actorzip.feed.domain.*
 import dev.anyjava.actorzip.feed.service.MediaFeedFinder
 import io.kotest.core.spec.style.AnnotationSpec
+import io.kotest.matchers.shouldBe
+import org.springframework.data.domain.PageRequest
 import java.time.LocalDateTime
 
 class MediaFeedApplicationServiceTest : AnnotationSpec() {
@@ -25,14 +21,19 @@ class MediaFeedApplicationServiceTest : AnnotationSpec() {
         }
 
         override fun scrap(feed: Feed): List<MediaFeed> {
-            return listOf(MediaFeed("", anyFeed))
+            return listOf(MediaFeed(MediaType.AVI, "", anyFeed))
         }
     }
 
-    val mediaFeedRepository: MediaFeedRepository = mock {
-    }
+    lateinit var mediaFeedRepository: MediaFeedRepository
 
-    val mediaFeedApplicationService = MediaFeedApplicationService(listOf(mediaFeedFinder), mediaFeedRepository)
+    lateinit var mediaFeedApplicationService: MediaFeedApplicationService
+
+    @BeforeEach
+    fun setup() {
+        mediaFeedRepository = MediaFeedInMemoryRepository()
+        mediaFeedApplicationService = MediaFeedApplicationService(listOf(mediaFeedFinder), mediaFeedRepository)
+    }
 
     @Test
     fun `run`() {
@@ -43,6 +44,21 @@ class MediaFeedApplicationServiceTest : AnnotationSpec() {
         mediaFeedApplicationService.run(feed)
 
         // then
-        verify(mediaFeedRepository, times(1)).saveAll(listOf(MediaFeed("", anyFeed)))
+        mediaFeedRepository.findAll() shouldBe listOf(MediaFeed(MediaType.AVI,"", anyFeed))
+    }
+
+    @Test
+    fun `get media feeds`() {
+        // given
+        val mediaFeed = MediaFeed(MediaType.IMAGE, "url", Feed("title", "/urlcontent", LocalDateTime.now()))
+        mediaFeedRepository.saveAll(listOf(mediaFeed))
+
+        // when
+        val mediaFeeds = mediaFeedApplicationService.getMediaFeeds(PageRequest.of(0, 20))
+
+        // then
+        mediaFeeds.content.size shouldBe 1
+        mediaFeeds.content[0].mediaType shouldBe MediaType.IMAGE
+        mediaFeeds.content[0].originUrl shouldBe "https://clien.net/urlcontent"
     }
 }

@@ -1,6 +1,14 @@
 package dev.anyjava.actorzip.feed.domain
 
-class MediaFeed(val url: String, val feed: Feed, val thumbnail: String = "") {
+import java.time.LocalDateTime
+
+class MediaFeed(
+    val type: MediaType,
+    val url: String,
+    val feed: Feed,
+    val thumbnail: String = "",
+    val registrationDateTime: LocalDateTime = LocalDateTime.now()
+) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

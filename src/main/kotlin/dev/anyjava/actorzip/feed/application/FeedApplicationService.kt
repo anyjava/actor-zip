@@ -1,6 +1,6 @@
 package dev.anyjava.actorzip.feed.application
 
-import dev.anyjava.actorzip.adapter.presentation.controller.FeedsResponse
+import dev.anyjava.actorzip.feed.application.dto.FeedsResponse
 import dev.anyjava.actorzip.feed.domain.Feed
 import dev.anyjava.actorzip.feed.domain.FeedRepository
 import dev.anyjava.actorzip.feed.domain.SiteType
